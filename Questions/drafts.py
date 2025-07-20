@@ -13,12 +13,3 @@ tounaments = pd.read_csv('/workspaces/Tennis_matches/Dataset/MatchEventInfo.csv'
 #v=Match_info["statistic_name"][Match_info["statistic_name"].str.contains("ace", case=False, na=False)   ].count()  # Find unique values containing 'ace'
 print(tounaments.sample(100))  # Print the unique values containing 'ace'
 #print(Match_info.head(100))  # Print all rows to check the data
-
-
-df['start_datetime'] = pd.to_datetime(df['start_datetime'], unit='s')
-
-# Extract month (as number)
-df['month'] = df['start_datetime'].dt.month
-
-# If you want month name instead
-df['month_name'] = df['start_datetime'].dt.strftime('%B')
