@@ -61,3 +61,4 @@ top_vs_top10 = summary.sort_values('win_percentage', ascending=False).head(1)
 
 print("Player with highest win % vs top 10 opponents:")
 print(top_vs_top10)
+print( top10_players)

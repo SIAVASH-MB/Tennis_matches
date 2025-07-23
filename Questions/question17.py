@@ -1,28 +1,16 @@
+service_games_played = 76123
+service_games_won = 23216
 
-import pandas as pd
-import csv
+# Step 1: Calculate breaks of serve
+breaks_of_serve = service_games_played - service_games_won
 
+# Assume number of matches is equal to total service games won
+# (as stated in the assumption)
+total_matches = 23216
 
-InfoFile = pd.read_csv('MatchEventInfo.csv')
+# Step 2: Calculate average breaks per match
+average_breaks_per_match = breaks_of_serve / total_matches
 
-df = pd.DataFrame(InfoFile)
-#Break Of Serve
-BOS = df[['first_to_serve','winner_code']].dropna()
-FirstToServe =BOS['first_to_serve'].to_list()
-WinnerCode = BOS['winner_code'].to_list()
-
-
-num1 = 0
-num2 = 22353
-
-for i in range(0,22353):
-    if FirstToServe[i] != WinnerCode[i]:
-        num1 += 1
-    else:
-        num1 = num1
-
-
-result = (num1 / num2) *100  
-
-
-print(result)
+# Output result
+print("Breaks of serve:", breaks_of_serve)
+print("Average breaks per match: {:.2f}".format(average_breaks_per_match))
