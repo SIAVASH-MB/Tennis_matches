@@ -1,6 +1,6 @@
 # How many sets are typically played in a tennis match? 
 import pandas as pd
-DF= pd.read_csv("/workspaces/Tennis_matches/Dataset/PowerInfo.csv")
+DF= pd.read_csv("Tennis_matches/Dataset/PowerInfo.csv")
 most_played=DF["set_num"].mode()  # This will give the most common number of sets played
 print("Most played sets in a match: ", most_played[0])  # mode returns a Series, take the first element
 

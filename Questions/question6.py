@@ -2,11 +2,11 @@
 import pandas as pd
 import numpy as np
 pd.set_option('display.max_columns', None)  # Show all columns
-Events=pd.read_csv("/workspaces/Tennis_matches/Dataset/MatchEventInfo.csv")
+Events=pd.read_csv("Tennis_matches/Dataset/MatchEventInfo.csv")
 Events = Events[["match_id", "winner_code"]] # Select relevant columns
-Home_Team=pd.read_csv("/workspaces/Tennis_matches/Dataset/MatchHomeTeamInfo.csv")
+Home_Team=pd.read_csv("Tennis_matches/Dataset/MatchHomeTeamInfo.csv")
 Home_Team = Home_Team[["match_id", "name", "country"]]  # Select relevant columns
-Away_Team=pd.read_csv("/workspaces/Tennis_matches/Dataset/MatchAwayTeamInfo.csv")
+Away_Team=pd.read_csv("Tennis_matches/Dataset/MatchAwayTeamInfo.csv")
 Away_Team = Away_Team[["match_id", "name", "country"]]
 DF = pd.merge(Events, Home_Team, on="match_id", how="left", suffixes=('', '_home'))
 DF_full = pd.merge(DF, Away_Team, on="match_id", how="left", suffixes=('', '_away'))
