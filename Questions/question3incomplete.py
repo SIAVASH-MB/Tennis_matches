@@ -1,23 +1,18 @@
-# 9. Which player has won the most tournaments in a single month?
+# 12. What is the average number of games per set in men's matches compared to women's matches? 
 import pandas as pd
 import numpy as np
-pd.set_option('display.max_columns', None)  # Show all columns
-#tounaments = pd.read_csv('/workspaces/Tennis_matches/Dataset/MatchTournamentInfo.csv',usecols=["match_id", "tournament_name"])
-PeriodInfo= pd.read_csv("Tennis_matches/Dataset/PeriodInfo.csv",usecols=["match_id", "statistic_name"])
-Home_Team=pd.read_csv("Tennis_matches/Dataset/MatchHomeTeamInfo.csv",usecols=["match_id", "name"])
-Away_Team=pd.read_csv("Tennis_matches/Dataset/MatchAwayTeamInfo.csv",usecols=["match_id", "name"])
-date = pd.read_csv('Tennis_matches/Dataset/MatchEventInfo.csv', usecols=["match_id", "start_datetime"])
-date['start_datetime'] = pd.to_datetime(date['start_datetime'], unit='s')
-date['month'] = date['start_datetime'].dt.month
-date['month_name'] = date['start_datetime'].dt.strftime('%B')
-Players= pd.concat([Home_Team, Away_Team], axis=0)
-#Df = pd.merge(tounaments, Players, on="match_id", how="left", suffixes=('', '_player'))
-Df = pd.merge(Players, PeriodInfo, on="match_id", how="left")
-Df = pd.merge(Df, date, on="match_id", how="left")
-Df= Df[Df['statistic_name']== 'total_won']
-Df = Df.groupby(['name', 'month_name'])["statistic_name"].count().reset_index()
-Df = Df.rename(columns={"statistic_name": "sum_won"})
-Df = Df.sort_values(by=['month_name', 'sum_won'], ascending=False)
-Df = Df.groupby('month_name').head(1).reset_index(drop=True)
-Most_won = Df.sort_values(by='sum_won', ascending=False).head(1)
-print(Most_won)
+Away_Team = pd.read_csv("Tennis_matches/Dataset/MatchAwayTeamInfo.csv")
+Home_Team = pd.read_csv("Tennis_matches/Dataset/MatchHomeTeamInfo.csv")
+DF_Away = Away_Team[["match_id", "gender"]]
+Df_Home = Home_Team[["match_id","gender"]]
+DF = pd.concat([DF_Away, Df_Home], ignore_index=True)
+DF = DF.rename(columns={"match_id": "match_id","gender":"gender"})
+DF_Players = DF.drop_duplicates(subset=["match_id"])  # Remove duplicates based on match_id
+DF_Players = DF_Players.reset_index(drop=True)  # Reset index after dropping duplicates
+
+time= pd.read_csv("Tennis_matches/Dataset/MatchTimeInfo.csv")
+time = time[["match_id", "period_1", "period_2", "period_3", "period_4", "period_5"]]
+DF_Full = pd.merge(DF_Players, time, on="match_id", how="inner")
+#time_per_period = pd.pivot_table(DF_Full, columns="gender",index=["period_1", "period_2", "period_3", "period_4", "period_5"], aggfunc=np.sum)
+time_per_period =DF_Full.groupby("gender")[["period_1", "period_2", "period_3", "period_4", "period_5"]].mean().reset_index()
+print(time_per_period)
