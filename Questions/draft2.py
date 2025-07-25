@@ -1,28 +1,20 @@
-## 17. What is the average number of breaks of serve per match? 
 import pandas as pd
-import csv
 
+# Load necessary columns
+PeriodInfo = pd.read_csv("/workspaces/Tennis_matches/Dataset/PeriodInfo.csv", 
+                         usecols=["match_id", "statistic_name", "home_value", "away_value"])
 
-InfoFile = pd.read_csv('/workspaces/Tennis_matches/Dataset/MatchEventInfo.csv')
+# Filter only rows where statistic is 'aces'
+df_aces = PeriodInfo[PeriodInfo['statistic_name'].str.lower() == 'aces']
 
-df = pd.DataFrame(InfoFile)
-#
-BOS = df[['first_to_serve','winner_code']].dropna()
-FirstToServe =BOS['first_to_serve'].to_list()
-WinnerCode = BOS['winner_code'].to_list()
+# Sum aces per match (home + away)
+df_aces['total_aces'] = df_aces['home_value'] + df_aces['away_value']
 
+# Group by match and sum total aces
+aces_per_match = df_aces.groupby('match_id')['total_aces'].sum()
 
-num1 = 0
-num2 = 22353
+# Calculate average
+average_aces_per_match = aces_per_match.mean()
 
-for i in range(0,22353):
-    if FirstToServe[i] != WinnerCode[i]:
-        num1 += 1
-    else:
-        num1 = num1
-
-
-result = (num1 / num2) *100  
-
-
-print(result)
+# Print result
+print(f"Average number of aces per match: {average_aces_per_match:.2f}")
