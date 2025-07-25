@@ -15,6 +15,8 @@ Players= pd.concat([Home_Team, Away_Team], axis=0)
 Df = pd.merge(Players, PeriodInfo, on="match_id", how="left")
 Df = pd.merge(Df, date, on="match_id", how="left")
 Df= Df[Df['statistic_name']== 'total_won']
+Df=Df.drop_duplicates(subset=['match_id'])
+Df.drop(columns=['match_id', 'start_datetime',"month"], inplace=True)
 Df = Df.groupby(['name', 'month_name'])["statistic_name"].count().reset_index()
 Df = Df.rename(columns={"statistic_name": "sum_won"})
 Df = Df.sort_values(by=['month_name', 'sum_won'], ascending=False)
