@@ -4,9 +4,9 @@ pd.set_option('display.max_columns', None)  # Show all columns
 #Match_info= pd.read_csv("/workspaces/Tennis_matches/Dataset/PeriodInfo.csv",usecols=["match_id", "statistic_name", "value"])
 #score_Home=pd.read_csv("/workspaces/Tennis_matches/Dataset/MatchHomeScoreInfo.csv")
 #score_Away=pd.read_csv("/workspaces/Tennis_matches/Dataset/MatchAwayScoreInfo.csv")
-tounaments = pd.read_csv('/workspaces/Tennis_matches/Dataset/PeriodInfo.csv')
+tounaments=pd.read_csv("/workspaces/Tennis_matches/Dataset/MatchHomeTeamInfo.csv")
 #Nui=Match_info["statistic_name"].unique()
-c=tounaments["statistic_name"].value_counts()  # Count unique values
+c=tounaments.head(10)  # Count unique values
 #print(c)  # Print the counts of unique values
 #print(Nui)  # Print first 5 rows to check the data
 
