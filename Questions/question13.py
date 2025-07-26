@@ -1,9 +1,10 @@
 # 13. What is the distribution of left-handed versus right-handed players? 
+# 13. What is the distribution of left-handed versus right-handed players? 
 import pandas as pd
 import numpy as np
 pd.set_option('display.max_columns', None)  # Show all columns
-DF_Away= pd.read_csv("/workspaces/Tennis_matches/Dataset/MatchAwayTeamInfo.csv")
-DF_Home=pd.read_csv("/workspaces/Tennis_matches/Dataset/MatchHomeTeamInfo.csv")
+DF_Away= pd.read_csv("MatchAwayTeamInfo.csv")
+DF_Home=pd.read_csv("MatchHomeTeamInfo.csv")
 DF_Hand_Home=DF_Home["plays"]
 DF_Hand_Away=DF_Away["plays"]
 DF_Hand=pd.concat([DF_Hand_Home, DF_Hand_Away], axis=0)

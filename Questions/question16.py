@@ -6,10 +6,10 @@ df_away = pd.read_csv("MatchAwayTeamInfo.csv")
 df_match = pd.read_csv("MatchEventInfo.csv")
 
 # Label teams
-df_home = df_home[['match_id', 'player_id', 'current_rank']].copy()
+df_home = df_home[['match_id', 'player_id', 'current_rank', 'name']].copy()
 df_home['team'] = 'home'
 
-df_away = df_away[['match_id', 'player_id', 'current_rank']].copy()
+df_away = df_away[['match_id', 'player_id', 'current_rank', 'name']].copy()
 df_away['team'] = 'away'
 
 # Combine players
@@ -25,8 +25,8 @@ top10_players = (
 )
 
 # Merge to create full match info with both players
-df_home.columns = ['match_id', 'home_id', 'home_rank', 'team']
-df_away.columns = ['match_id', 'away_id', 'away_rank', 'team']
+df_home.columns = ['match_id', 'home_id', 'home_rank', 'team', 'name']
+df_away.columns = ['match_id', 'away_id', 'away_rank', 'team', 'name']
 df_matches = pd.merge(df_home[['match_id', 'home_id', 'home_rank']], 
                       df_away[['match_id', 'away_id', 'away_rank']], 
                       on='match_id')
